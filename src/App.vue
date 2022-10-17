@@ -2,10 +2,12 @@
   <div id="app">
     <div class="noteList">
       <div class="addBtm"><b>+ Add note</b></div>
-      <div class="notes"></div>
+      <div class="notesListTi" v-for="(note, index) in notes" :key="index" @click="tap(index)">
+        {{ note.title }}
+      </div>
     </div>
-    <editor :key="index" :curr-data="currdate" />
-    <viewer :key="index" :preview-data="predata" />
+    <editor :key="index" :current-note="currentNote" />
+    <viewer :key="index" :preview-data="preNote" />
   </div>
 </template>
 
@@ -17,7 +19,13 @@ import editor from "./components/editor";
 import viewer from "./components/viewer";
 
 export default {
-  name: 'App',
+  name: "App",
+  props: {
+    appData: {
+      type: Object,
+      required: true,
+    },
+  },
   components: {
     notes,
     editor,
@@ -25,15 +33,37 @@ export default {
   },
   data() {
     return {
-      notesDate: ["1","2",3],
-
+      currentNote: {
+        title: "000",
+        favorite: false,
+        content: "ZZZZZZZ",
+        id: "0",
+      },
+      notes: [
+        {
+          title: "111",
+          favorite: false,
+          content: "oneoneone",
+          id: "1",
+        },
+        {
+          title: "222",
+          favorite: false,
+          content: "twotwotwo",
+          id: "2",
+        },
+      ],
+    };
+  },
+  methods: {
+    tap(id) {
+      this.currentNote = this.notes[id];
     }
   },
-}
+};
 </script>
 
 <style lang="scss">
-
 body {
   margin: 0px;
 }
@@ -51,14 +81,27 @@ body {
     box-sizing: border-box;
 
     .addBtm {
-      position: absolute;
-      background-color: #3CBB84;
+      position: relative;
+      background-color: #3cbb84;
       color: white;
+      width: 120px;
+      font-size: 23px;
       padding: 5px;
       border-radius: 3px;
       margin: 5px;
       cursor: pointer;
+      margin-bottom: 20px;
     }
-  }  
+
+    .notesListTi {
+      cursor: pointer;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      &:hover {
+        background-color: plum;
+      }
+    }
+  }
 }
 </style>
