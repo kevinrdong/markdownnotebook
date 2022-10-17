@@ -60,45 +60,5 @@ body {
       cursor: pointer;
     }
   }  
-  .currentNote {
-    background-color: blue;
-    height: 95vh;
-    width: 40vw;
-
-    .title {
-      position: relative;
-      display: flex;
-      margin: 5px;
-      align-items: center;
-
-      .typeTitle {
-        height: 30px;
-        width: 35%;
-      }
-      .bt {
-        background-color: #3CBB84;
-        color: white;
-        padding: 5px;
-        border-radius: 3px;
-        margin: 5px;
-        cursor: pointer;
-        width: 30px;
-        height: 30px;
-        font-size: 23px;
-        text-align: center;
-        margin-left: 10px;
-      }
-    }
-    .edit {
-      background-color: pink;
-      width: 39vw;
-      height: 88vh;
-      }
-  }
-  .viewNote {
-    background-color: green;
-    height: 95vh;
-    width: 40vw;
-  }
 }
 </style>
