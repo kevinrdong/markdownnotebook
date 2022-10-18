@@ -1,8 +1,8 @@
 <template>
   <div class="currentNote">
     <div class="title">
-      <input type="text" class="typeTitle" />
-      <div class="bt">☆</div>
+      <input type="text" class="typeTitle"  v-model="currentNote.title" />
+      <div class="bt" @click="favorite">☆</div>
       <div class="bt">🗑︎</div>
     </div>
     <textarea name="edit" class="edit" v-model="currentNote.content" />
@@ -10,22 +10,23 @@
 </template>
   
   <script>
-import App from "../App.vue";
 
 export default {
   props: {
     currentNote: {
       type: Object,
       required: true,
-    },
-    components: {
-      App,
-    },
+    }
   },
   data() {
     return {
-
+      
     };
+  },
+  methods: {
+    favorite() {
+      this.$emit('favorite',this.currentNote.id)
+    }
   },
 };
 </script>
@@ -63,7 +64,9 @@ export default {
   .edit {
     background-color: pink;
     width: 39vw;
-    height: 88vh;
+    max-width: 39vw;
+    height: 86vh;
+    padding: 10px;
   }
 }
 </style>
