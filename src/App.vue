@@ -7,7 +7,7 @@
         tabindex="-1"
         v-for="(note, index) in notes"
         :key="index"
-        @click="tap(index)"
+        @click="tap(note.id)"
       >
         {{ note.title }}
         <div class="star" v-show="note.favorite">★</div>
@@ -81,7 +81,14 @@ export default {
   },
   methods: {
     tap(id) {
-      this.currentNote = this.notes[id];
+      var index = this.notes.findIndex((note) => {
+        return note.id === id     
+      })
+      console.log(index)
+      // var newObject = this.notes[index]; 
+      this.currentNote = this.notes[index]; 
+
+      // this.currentNote = this.notes[id]; 
     },
     setFavorite(id) {
       // console.log("id",id)
