@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <div class="noteList">
-      <div class="addBtm"><b>+ Add note</b></div>
+      <div class="addBtm" @click="addNote"><b>+ Add note</b></div>
       <div
         class="notesListTi"
         tabindex="-1"
@@ -13,15 +13,13 @@
         <div class="star" v-show="note.favorite">★</div>
       </div>
     </div>
-    <editor :key="index" :current-note="currentNote" @favorite="setFavorite" />
+    <editor :key="index" :current-note="currentNote" @favorite="setFavorite" @deleteIt="setDeleteIt"/>
     <viewer :key="index" :preview-note="currentNote" />
   </div>
 </template>
 
-<script src="https://unpkg.com/vue/dist/vue.js"></script>
-<script src="https://unpkg.com/marked"></script>
 <script>
-import notes from "./components/notes";
+
 import editor from "./components/editor";
 import viewer from "./components/viewer";
 
@@ -34,7 +32,6 @@ export default {
     },
   },
   components: {
-    notes,
     editor,
     viewer,
   },
@@ -44,10 +41,33 @@ export default {
         title: "000",
         favorite: false,
         content:
-          "Ullamco voluptate eiusmod cupidatat incididunt voluptate laboris duis qui exercitation Lorem aliquip. Nulla consequat ex excepteur cillum labore incididunt. Amet voluptate consectetur elit veniam ex dolor aliqua Lorem incididunt dolore minim. Excepteur consequat proident reprehenderit consequat amet sint et nisi commodo nostrud do aliqua cupidatat.Exercitation amet eiusmod sint consectetur anim. In minim occaecat sint voluptate officia cillum exercitation ullamco ex. Nostrud est enim amet incididunt consequat non ex. Sint nulla ea occaecat velit reprehenderit excepteur veniam deserunt minim minim ad incididunt.",
+          `# title  
+          ## title 
+          **粗體** 
+          *斜體*
+          ***粗又斜***
+          
+          - ewd
+          - ggg
+          `,
         id: "0",
       },
       notes: [
+      {
+          title: "000",
+          favorite: false,
+          content:
+          `# title  
+          ## title 
+          **粗體** 
+          *斜體*
+          ***粗又斜***
+          >引用段落
+          >
+          段落
+          `,
+          id: "0",
+        },
         {
           title: "111",
           favorite: false,
@@ -68,13 +88,6 @@ export default {
           content:
             "Anim commodo ut excepteur fugiat anim ullamco veniam cupidatat adipisicing et ex. Ullamco pariatur nisi anim est sit proident velit. Reprehenderit aute incididunt ad velit incididunt esse consequat consequat do nulla duis excepteur irure commodo. Ipsum velit ut id sunt reprehenderit ad deserunt. Aute ex fugiat dolor excepteur culpa ex nisi laborum ut adipisicing ipsum fugiat officia exercitation.Consectetur sunt est quis Lorem. Ad voluptate quis commodo in labore eu nostrud minim consectetur consequat dolore cupidatat commodo dolor. Culpa aute ad nostrud amet excepteur occaecat pariatur proident nisi dolor dolor. Adipisicing et occaecat commodo quis nostrud cupidatat.",
           id: "3",
-        },
-        {
-          title: "000",
-          favorite: false,
-          content:
-            "Ullamco voluptate eiusmod cupidatat incididunt voluptate laboris duis qui exercitation Lorem aliquip. Nulla consequat ex excepteur cillum labore incididunt. Amet voluptate consectetur elit veniam ex dolor aliqua Lorem incididunt dolore minim. Excepteur consequat proident reprehenderit consequat amet sint et nisi commodo nostrud do aliqua cupidatat.Exercitation amet eiusmod sint consectetur anim. In minim occaecat sint voluptate officia cillum exercitation ullamco ex. Nostrud est enim amet incididunt consequat non ex. Sint nulla ea occaecat velit reprehenderit excepteur veniam deserunt minim minim ad incididunt.",
-          id: "0",
         },
       ],
     };
@@ -101,6 +114,21 @@ export default {
       newObject.favorite = !newObject.favorite;
       this.notes.splice(index, 1, newObject)
     },
+    setDeleteIt(id) {
+      var index = this.notes.findIndex((note) => {
+        return note.id === id     
+      })
+      this.notes.splice(index, 1)
+    },
+    addNote() {
+      var newNote ={
+        title: "New Note",
+        favorite: false,
+        content: "",
+        id: this.notes.length + 1
+      }
+      this.notes.push(newNote);
+    }
   },
 };
 </script>
@@ -116,9 +144,9 @@ body {
   margin: 0px;
 
   .noteList {
-    background-color: yellow;
+    background-color: #e8f5e9;
     position: relative;
-    height: 95vh;
+    min-height: 100vh;
     width: 20vw;
     box-sizing: border-box;
 
@@ -141,7 +169,7 @@ body {
       display: flex;
       align-items: center;
       padding-left: 10px;
-      // justify-content: space-between;
+      justify-content: space-between;
       &:hover {
         background-color: #3cbb84;
       }
@@ -152,7 +180,7 @@ body {
       .star {
         position: relative;
         font-size: 25px;
-        left: 80%;
+        left: -10%;
       }
     }
   }

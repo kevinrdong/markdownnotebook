@@ -3,13 +3,14 @@
     <div class="title">
       <input type="text" class="typeTitle"  v-model="currentNote.title" />
       <div class="bt" @click="favorite">☆</div>
-      <div class="bt">🗑︎</div>
+      <div class="bt" @click="deleteIt">🗑︎</div>
     </div>
     <textarea name="edit" class="edit" v-model="currentNote.content" />
   </div>
 </template>
   
   <script>
+
 
 export default {
   props: {
@@ -26,6 +27,9 @@ export default {
   methods: {
     favorite() {
       this.$emit('favorite',this.currentNote.id)
+    },
+    deleteIt() {
+      this.$emit('deleteIt',this.currentNote.id)
     }
   },
 };
@@ -33,7 +37,7 @@ export default {
 
 <style lang="scss">
 .currentNote {
-  background-color: blue;
+  // background-color: blue;
   height: 95vh;
   width: 40vw;
 
@@ -46,6 +50,7 @@ export default {
     .typeTitle {
       height: 30px;
       width: 35%;
+      background-color: #e8f5e9;
     }
     .bt {
       background-color: #3cbb84;
@@ -62,9 +67,10 @@ export default {
     }
   }
   .edit {
-    background-color: pink;
+    // background-color: pink;
+    box-sizing: border-box;
     width: 39vw;
-    max-width: 39vw;
+    max-width: 40vw;
     height: 86vh;
     padding: 10px;
   }

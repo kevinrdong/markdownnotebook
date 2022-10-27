@@ -1,12 +1,10 @@
 <template>
   <div class="viewNote">
-    <textarea name="viewer"  readonly="readonly" class="viewNotes" v-model="previewNote.content" />
-  </div>
+    <vue-marked>{{previewNote.content}}</vue-marked>  </div>
 </template>
   
-  <script>
-
-
+<script>
+import VueMarked from 'vue-marked';
 export default {
   props: {
     previewNote: {
@@ -15,7 +13,9 @@ export default {
     },
    
   },
-
+  components: {
+    VueMarked,
+  },
   data() {
     return {
       ifStar: false,
@@ -26,10 +26,11 @@ export default {
 
 <style lang="scss">
 .viewNote {
-  .viewNotes {
-    background-color: green;
+  padding: 15px;
+    box-sizing: border-box;
+    // background-color: green;
     height: 95vh;
     width: 40vw;
-  }
+
 }
 </style>
